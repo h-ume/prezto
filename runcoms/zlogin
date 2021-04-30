@@ -19,8 +19,23 @@ if [[ -o INTERACTIVE && -t 2 ]]; then
 
   # Print a random, hopefully interesting, adage.
   if (( $+commands[fortune] )); then
-    fortune -s
+    if [ -r /usr/local/share/games/fortune/ferengi_rules_of_acquisition ]; then
+      fortune ferengi_rules_of_acquisition
+    elif [ -r /usr/local/share/games/fortune/startrek ]; then
+      fortune startrek
+    else
+      fortune -s
+    fi
     print
   fi
 
 fi >&2
+
+if [[ -r ~/bin/ssh-auth-sock-update.sh ]]; then
+  source ~/bin/ssh-auth-sock-update.sh
+fi
+
+# Local Variables:
+# mode: shell-script
+# sh-basic-offset: 2
+# End:

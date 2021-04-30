@@ -17,9 +17,13 @@ fi
 # Editors
 #
 
-export EDITOR='nano'
-export VISUAL='nano'
-export PAGER='less'
+export EDITOR='vi'
+export VISUAL='vi'
+if [[ "${TERM}" = emacs ]]; then
+    export PAGER='colcrt'
+else
+    export PAGER='less'
+fi
 
 #
 # Language
@@ -42,10 +46,10 @@ typeset -gU cdpath fpath mailpath path
 # )
 
 # Set the list of directories that Zsh searches for programs.
-path=(
-  /usr/local/{bin,sbin}
-  $path
-)
+# path=(
+#   /usr/local/{bin,sbin}
+#   $path
+# )
 
 #
 # Less
@@ -54,10 +58,33 @@ path=(
 # Set the default Less options.
 # Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
 # Remove -X and -F (exit if the content fits on one screen) to enable it.
-export LESS='-F -g -i -M -R -S -w -X -z-4'
+# export LESS='-F -g -i -M -R -S -w -X -z-4'
+export LESS='-i -M -R -S'
 
 # Set the Less input preprocessor.
 # Try both `lesspipe` and `lesspipe.sh` as either might exist on a system.
-if (( $#commands[(i)lesspipe(|.sh)] )); then
-  export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
+if (( ${+commands[src-hilite-lesspipe.sh]} )); then
+  export LESSOPEN="| src-hilite-lesspipe.sh %s 2>&-"
+elif (( ${+commands[lesspipe(|.sh)]} )); then
+  export LESSOPEN="| ${commands[(i)lesspipe(|.sh)]} %s 2>&-"
 fi
+
+if [[ ${OSTYPE} =~ 'freebsd' ]]; then
+  export SSL_CA_CERT_PATH=/etc/ssl/certs
+fi
+
+export DICTIONARY=en_US
+export TOP=-P
+
+if (( ${+commands[fzf]} )); then
+  export FZF_DEFAULT_OPTS='--multi --bind ctrl-a:select-all --bind ctrl-u:deselect-all'
+fi
+
+if (( ${+commands[npm]} )); then
+  export NODE_PATH=$(npm root -g)
+fi
+
+# Local Variables:
+# mode: shell-script
+# sh-basic-offset: 2
+# End:

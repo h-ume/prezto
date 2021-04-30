@@ -1,3 +1,11 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ ! ${TTY} =~ '^/dev/tty' ]]; then
+  if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+  fi
+fi
 #
 # Executes commands at the start of an interactive session.
 #
@@ -5,9 +13,133 @@
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
+if (( $+commands[gnuls] )); then
+  alias ls='gnuls'
+fi
+
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
 # Customize to your needs...
+
+# directory
+unsetopt AUTO_CD
+unsetopt AUTO_PUSHD
+
+unset "aliases[rsync]"
+if (( ! $+commands[gnuls] )); then
+  alias lx='ls -aF'
+fi
+
+unalias run-help >/dev/null 2>&1 && autoload -Uz run-help
+
+if (( ${+commands[clipit]} )); then
+  alias pbcopy='clipit'
+  alias pbpaste='clipit -c'
+elif (( ${+commands[xclip]} )); then
+  alias pbcopy='xclip -selection c'
+  alias pbpaste='xclip -selection c -o'
+elif (( ${+commands[clip]} )); then
+  alias pbcopy='clip'
+  alias pbpaste='powershell get-clipboard'
+elif [ -x '/c/Windows/System32/clip.exe' ]; then
+  alias pbcopy='/c/Windows/System32/clip.exe'
+  alias pbpaste='/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe get-clipboard'
+fi
+
+if [[ "${HOST}" =~ '.mahoroba.org$' ]]; then
+  alias traceroute='env RA_SERVER=whois.mahoroba.org traceroute'
+  alias traceroute6='env RA_SERVER=whois.mahoroba.org traceroute6'
+fi
+
+alias sortip='sort -t. +0 -1n +1 -2n +2 -3n +3 -4n'
+
+ssh-export() { export SSH_AUTH_SOCK=`ls /tmp/ssh-*/* |head -1` }
+
+rmorig() {
+  case "$1" in
+  -n)
+    delete=''
+    shift
+    ;;
+  *)
+    delete='-delete'
+    ;;
+  esac
+  if [[ -z "$1" ]]; then
+    set '.'
+  fi
+  find $* -name '*.orig' -print ${delete}
+}
+
+# if [[ -n "${TERM}" ]]; then
+#   # https://starship.rs/
+#   eval "$(starship init zsh)"
+
+#   autoload -Uz add-zsh-hook
+
+#   function _set_terminal_title() {
+#     print -n -P '\e]0;%n@%M:%~\a'
+#   }
+#   add-zsh-hook precmd _set_terminal_title
+
+#   # starship set PS1 as an environment variable
+#   _saved_ps1="${PS1}"
+
+#   function _restore_ps1() {
+#     PS1="${_saved_ps1}"
+#   }
+#   add-zsh-hook precmd _restore_ps1
+
+#   function _unset_ps1() {
+#     unset PS1
+#     # unset PROMPT
+#   }
+#   add-zsh-hook preexec _unset_ps1
+# fi
+
+# zsh-users/zsh-history-substring-search
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+bindkey -M emacs '^P' history-substring-search-up
+bindkey -M emacs '^N' history-substring-search-down
+
+# zsh-users/zsh-autosuggestions
+ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=${ZSH_AUTOSUGGEST_ACCEPT_WIDGETS:#*forward-char}
+ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS+=(
+	forward-char
+	emacs-forward-char
+	vi-forward-char
+)
+ZSH_AUTOSUGGEST_USE_ASYNC=1
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=60
+bindkey '^[[1;2C' forward-word
+bindkey '^[[1;2D' backward-word
+bindkey '^[[5~' beginning-of-line
+bindkey '^[[6~' end-of-line
+
+() {
+  local _fzf_dir=/usr/local/share/examples/fzf/shell
+
+  if [[ -d ${_fzf_dir} ]]; then
+    # Auto-completion
+    # ---------------
+    [[ $- == *i* ]] && source "${_fzf_dir}/completion.zsh" 2> /dev/null
+
+    # Key bindings
+    # ------------
+    source "${_fzf_dir}/key-bindings.zsh"
+  fi
+}
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+if [[ ! ${TTY} =~ '^/dev/tty' ]]; then
+  [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+fi
+
+# Local Variables:
+# mode: shell-script
+# sh-basic-offset: 2
+# End:
