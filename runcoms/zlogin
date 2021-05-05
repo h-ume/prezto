@@ -36,6 +36,7 @@ if [[ -r ~/bin/ssh-auth-sock-update.sh ]]; then
 fi
 
 # Local Variables:
-# mode: shell-script
+# mode: sh
+# sh-shell: zsh
 # sh-basic-offset: 2
 # End:

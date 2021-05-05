@@ -19,6 +19,7 @@ echo $SAYINGS[$(($RANDOM % ${#SAYINGS} + 1))]
 } >&2
 
 # Local Variables:
-# mode: shell-script
+# mode: sh
+# sh-shell: zsh
 # sh-basic-offset: 2
 # End:

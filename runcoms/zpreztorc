@@ -240,6 +240,7 @@ zstyle ':prezto:module:utility' safe-ops 'no'
 zstyle ':prezto:module:utility' correct 'no'
 
 # Local Variables:
-# mode: shell-script
+# mode: sh
+# sh-shell: zsh
 # sh-basic-offset: 2
 # End:
