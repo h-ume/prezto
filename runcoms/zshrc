@@ -56,6 +56,12 @@ fi
 
 alias sortip='sort -t. +0 -1n +1 -2n +2 -3n +3 -4n'
 
+# zshでオプション一覧の出力を分かりやすくする
+# https://qiita.com/mollifier/items/26c67347734f9fcda274
+function showoptions() {
+  set -o | sed -e 's/^no\(.*\)on$/\1  off/' -e 's/^no\(.*\)off$/\1  on/'
+}
+
 ssh-export() { export SSH_AUTH_SOCK=`ls /tmp/ssh-*/* |head -1` }
 
 rmorig() {
