@@ -62,6 +62,14 @@ function showoptions() {
   set -o | sed -e 's/^no\(.*\)on$/\1  off/' -e 's/^no\(.*\)off$/\1  on/'
 }
 
+# ghq + pecoじゃなくて fzf連携
+# https://blog.fakiyer.com/entry/2016/01/29/142620
+frepo() {
+  local dir
+  dir=$(ghq list > /dev/null | fzf-tmux --reverse +m) &&
+    cd $(ghq root)/$dir
+}
+
 ssh-export() { export SSH_AUTH_SOCK=`ls /tmp/ssh-*/* |head -1` }
 
 rmorig() {
