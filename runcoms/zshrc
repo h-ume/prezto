@@ -13,9 +13,9 @@ fi
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
-if (( $+commands[gnuls] )); then
-  alias ls='gnuls'
-fi
+#if (( $+commands[gnuls] )); then
+#  alias ls='gnuls'
+#fi
 
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
