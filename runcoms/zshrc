@@ -29,7 +29,7 @@ unsetopt AUTO_CD
 unsetopt AUTO_PUSHD
 
 unset "aliases[rsync]"
-if (( ! $+commands[gnuls] )); then
+if [[ ! ${(@M)${(f)"$(ls --version 2>&1)"}:#*GNU *} ]]; then
   alias lx='ls -aF'
 fi
 
