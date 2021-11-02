@@ -139,9 +139,15 @@ bindkey '^[[5~' beginning-of-line
 bindkey '^[[6~' end-of-line
 
 () {
-  local _fzf_dir=/usr/local/share/examples/fzf/shell
+  local _fzf_dir_candidate=(
+    /usr/local/share/examples/fzf/shell
+    /usr/share/doc/fzf/examples
+  )
+  local _fzf_dir
 
-  if [[ -d ${_fzf_dir} ]]; then
+  for _fzf_dir in ${_fzf_dir_candidate}; do
+    [[ -d ${_fzf_dir} ]] || continue
+
     # Auto-completion
     # ---------------
     [[ $- == *i* ]] && source "${_fzf_dir}/completion.zsh" 2> /dev/null
@@ -149,7 +155,9 @@ bindkey '^[[6~' end-of-line
     # Key bindings
     # ------------
     source "${_fzf_dir}/key-bindings.zsh"
-  fi
+
+    break
+  done
 }
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
