@@ -41,9 +41,9 @@ if (( ${+commands[clipit]} )); then
 elif (( ${+commands[xclip]} )); then
   alias pbcopy='xclip -selection c'
   alias pbpaste='xclip -selection c -o'
-elif (( ${+commands[clip]} )); then
-  alias pbcopy='clip'
-  alias pbpaste='powershell get-clipboard'
+elif (( ${+commands[clip.exe]} )); then
+  alias pbcopy='clip.exe'
+  alias pbpaste='powershell.exe get-clipboard'
 elif [ -x '/c/Windows/System32/clip.exe' ]; then
   alias pbcopy='/c/Windows/System32/clip.exe'
   alias pbpaste='/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe get-clipboard'
@@ -87,6 +87,10 @@ rmorig() {
   fi
   find $* -name '*.orig' -print ${delete}
 }
+
+if [[ -f /etc/zsh_command_not_found ]]; then
+    source /etc/zsh_command_not_found
+fi
 
 # if [[ -n "${TERM}" ]]; then
 #   # https://starship.rs/

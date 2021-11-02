@@ -31,7 +31,9 @@ if [[ -o INTERACTIVE && -t 2 ]]; then
 
 fi >&2
 
-if [[ -r ~/bin/ssh-auth-sock-update.sh ]]; then
+if (( ${+commands[wsl-ssh-agent.sh]} )); then
+  eval $(wsl-ssh-agent.sh)
+elif [[ -r ~/bin/ssh-auth-sock-update.sh ]]; then
   source ~/bin/ssh-auth-sock-update.sh
 fi
 
