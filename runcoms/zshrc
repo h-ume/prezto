@@ -156,6 +156,15 @@ bindkey '^[[6~' end-of-line
     # ------------
     source "${_fzf_dir}/key-bindings.zsh"
 
+    # fzf+fasd
+    # ------------
+    local _fzf_fasd_dir=~/ghq/github.com/wookayin/fzf-fasd
+    if [[ -d ${_fzf_fasd_dir} ]]; then
+      alias fasd=~/.zprezto/modules/fasd/external/fasd
+      eval "$(fasd --init auto)"
+      source "${_fzf_fasd_dir}/fzf-fasd.plugin.zsh"
+    fi
+
     break
   done
 }
