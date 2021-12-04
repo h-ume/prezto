@@ -160,7 +160,7 @@ bindkey '^[[6~' end-of-line
     # ------------
     local _fzf_fasd_dir=~/ghq/github.com/wookayin/fzf-fasd
     if [[ -d ${_fzf_fasd_dir} ]]; then
-      alias fasd=~/.zprezto/modules/fasd/external/fasd
+      (( ${+commands[fasd]} )) || path=(${path} ~/.zprezto/modules/fasd/external)
       eval "$(fasd --init auto)"
       source "${_fzf_fasd_dir}/fzf-fasd.plugin.zsh"
     fi
