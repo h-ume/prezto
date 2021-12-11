@@ -131,7 +131,6 @@ ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS+=(
 	emacs-forward-char
 	vi-forward-char
 )
-ZSH_AUTOSUGGEST_USE_ASYNC=1
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=60
 bindkey '^[[1;2C' forward-word
 bindkey '^[[1;2D' backward-word
