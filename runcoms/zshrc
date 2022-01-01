@@ -93,32 +93,6 @@ if [[ -f /etc/zsh_command_not_found ]]; then
     source /etc/zsh_command_not_found
 fi
 
-# if [[ -n "${TERM}" ]]; then
-#   # https://starship.rs/
-#   eval "$(starship init zsh)"
-
-#   autoload -Uz add-zsh-hook
-
-#   function _set_terminal_title() {
-#     print -n -P '\e]0;%n@%M:%~\a'
-#   }
-#   add-zsh-hook precmd _set_terminal_title
-
-#   # starship set PS1 as an environment variable
-#   _saved_ps1="${PS1}"
-
-#   function _restore_ps1() {
-#     PS1="${_saved_ps1}"
-#   }
-#   add-zsh-hook precmd _restore_ps1
-
-#   function _unset_ps1() {
-#     unset PS1
-#     # unset PROMPT
-#   }
-#   add-zsh-hook preexec _unset_ps1
-# fi
-
 # zsh-users/zsh-history-substring-search
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
