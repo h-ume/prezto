@@ -32,7 +32,7 @@ if (( ${+commands[dircolors]} )); then
         break
       fi
     done
-    (( $+_ls_colors )) && export LS_COLORS="$(dircolors -b $_ls_colors)"
+    (( $+_ls_colors )) && eval "$(dircolors -b $_ls_colors)"
   }
 fi
 
