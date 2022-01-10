@@ -51,7 +51,7 @@ elif [ -x '/c/Windows/System32/clip.exe' ]; then
 fi
 
 if (( ${+commands[exa]} )); then
-  alias exa='exa --color=always --icons'
+  alias exa='exa --color=always --icons -g'
 fi
 
 if [[ "${HOST}" =~ '.mahoroba.org$' ]]; then
