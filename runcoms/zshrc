@@ -18,6 +18,24 @@ fi
 #  alias ls='gnuls'
 #fi
 
+if (( ${+commands[dircolors]} )); then
+  () {
+    local _ls_colors_candidate=(
+      ~/.dir_colors
+      ~/ghq/github.com/trapd00r/LS_COLORS/LS_COLORS
+    )
+    local _ls_colors
+    local _file
+    for _file in $_ls_colors_candidate; do
+      if [[ -f $_file ]]; then
+        _ls_colors=$_file
+        break
+      fi
+    done
+    (( $+_ls_colors )) && export LS_COLORS=$(dircolors -b $_ls_colors)
+  }
+fi
+
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
