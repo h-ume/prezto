@@ -50,6 +50,10 @@ elif [ -x '/c/Windows/System32/clip.exe' ]; then
   alias pbpaste='/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe get-clipboard'
 fi
 
+if (( ${+commands[exa]} )); then
+  alias exa='exa --color=always --icons'
+fi
+
 if [[ "${HOST}" =~ '.mahoroba.org$' ]]; then
   alias traceroute='env RA_SERVER=whois.mahoroba.org traceroute'
   alias traceroute6='env RA_SERVER=whois.mahoroba.org traceroute6'
