@@ -18,7 +18,9 @@ fi
 #  alias ls='gnuls'
 #fi
 
-if (( ${+commands[dircolors]} )); then
+if [[ -f ~/.ls_colors ]]; then
+  export LS_COLORS="$(cat ~/.ls_colors)"
+elif (( ${+commands[dircolors]} )); then
   () {
     local _ls_colors_candidate=(
       ~/.dir_colors
