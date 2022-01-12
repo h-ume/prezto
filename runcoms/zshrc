@@ -20,7 +20,7 @@ fi
 
 if [[ -f ~/.ls_colors ]]; then
   export LS_COLORS="$(cat ~/.ls_colors)"
-elif (( ${+commands[dircolors]} )); then
+elif (( $+commands[dircolors] )); then
   () {
     local _ls_colors_candidate=(
       ~/.dir_colors
@@ -59,13 +59,13 @@ fi
 
 unalias run-help >/dev/null 2>&1 && autoload -Uz run-help
 
-if (( ${+commands[clipit]} )); then
+if (( $+commands[clipit] )); then
   alias pbcopy='clipit'
   alias pbpaste='clipit -c'
-elif (( ${+commands[xclip]} )); then
+elif (( $+commands[xclip] )); then
   alias pbcopy='xclip -selection c'
   alias pbpaste='xclip -selection c -o'
-elif (( ${+commands[clip.exe]} )); then
+elif (( $+commands[clip.exe] )); then
   alias pbcopy='clip.exe'
   alias pbpaste='powershell.exe get-clipboard'
 elif [ -x '/c/Windows/System32/clip.exe' ]; then
@@ -73,11 +73,11 @@ elif [ -x '/c/Windows/System32/clip.exe' ]; then
   alias pbpaste='/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe get-clipboard'
 fi
 
-if (( ${+commands[exa]} )); then
+if (( $+commands[exa] )); then
   alias exa='exa --color=always --icons -g'
 fi
 
-if [[ "${HOST}" =~ '.mahoroba.org$' ]]; then
+if [[ $HOST =~ '.mahoroba.org$' ]]; then
   alias traceroute='env RA_SERVER=whois.mahoroba.org traceroute'
   alias traceroute6='env RA_SERVER=whois.mahoroba.org traceroute6'
 fi
@@ -110,10 +110,8 @@ rmorig() {
     delete='-delete'
     ;;
   esac
-  if [[ -z "$1" ]]; then
-    set '.'
-  fi
-  find $* -name '*.orig' -print ${delete}
+  [[ -z $1 ]] && set '.'
+  find $* -name '*.orig' -print $delete
 }
 
 if [[ -f /etc/zsh_command_not_found ]]; then
@@ -139,7 +137,7 @@ bindkey '^[[1;2D' backward-word
 bindkey '^[[5~' beginning-of-line
 bindkey '^[[6~' end-of-line
 
-(( ${+commands[fasd]} )) || path=(${path} ~/.zprezto/modules/fasd/external)
+(( $+commands[fasd] )) || path=($path ~/.zprezto/modules/fasd/external)
 eval "$(fasd --init auto)"
 
 () {
@@ -149,32 +147,32 @@ eval "$(fasd --init auto)"
   )
   local _fzf_dir
   local _dir
-  for _dir in ${_fzf_dir_candidate}; do
-    if [[ -d ${_dir} ]]; then
-      _fzf_dir=${_dir}
+  for _dir in $_fzf_dir_candidate; do
+    if [[ -d $_dir ]]; then
+      _fzf_dir=$_dir
       break
     fi
   done
 
-  if [[ -n ${_fzf_dir} ]]; then
+  if (( $+_fzf_dir )); then
     # Auto-completion
     # ---------------
-    [[ $- == *i* ]] && source "${_fzf_dir}/completion.zsh" 2> /dev/null
+    [[ $- == *i* ]] && source "$_fzf_dir/completion.zsh" 2> /dev/null
 
     # Key bindings
     # ------------
-    source "${_fzf_dir}/key-bindings.zsh"
+    source "$_fzf_dir/key-bindings.zsh"
 
     # fzf+fasd
     # ------------
     local _fzf_fasd_dir=~/ghq/github.com/wookayin/fzf-fasd
-    [[ -d ${_fzf_fasd_dir} ]] && source "${_fzf_fasd_dir}/fzf-fasd.plugin.zsh"
+    [[ -d $_fzf_fasd_dir ]] && source "$_fzf_fasd_dir/fzf-fasd.plugin.zsh"
   fi
 }
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-if [[ ! ${TTY} =~ '^/dev/tty' ]]; then
-  [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+if [[ ! $TTY =~ '^/dev/tty' ]]; then
+  [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 fi
 
 # Local Variables:

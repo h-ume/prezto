@@ -19,7 +19,7 @@ fi
 
 export EDITOR='vi'
 export VISUAL='vi'
-if [[ "${TERM}" = emacs ]]; then
+if [[ $TERM = emacs ]]; then
     export PAGER='colcrt'
 else
     export PAGER='less'
@@ -69,18 +69,18 @@ elif (( $+commands[(i)lesspipe(|.sh)] )); then
   export LESSOPEN="| $commands[(i)lesspipe(|.sh)] %s 2>&-"
 fi
 
-if [[ ${OSTYPE} =~ 'freebsd' ]]; then
+if [[ $OSTYPE =~ 'freebsd' ]]; then
   export SSL_CA_CERT_PATH=/etc/ssl/certs
 fi
 
 export DICTIONARY=en_US
 export TOP=-P
 
-if (( ${+commands[fzf]} )); then
+if (( $+commands[fzf] )); then
   export FZF_DEFAULT_OPTS='--multi --bind ctrl-a:select-all --bind ctrl-u:deselect-all'
 fi
 
-if (( ${+commands[npm]} )); then
+if (( $+commands[npm] )); then
   export NODE_PATH=$(npm root -g)
 fi
 
