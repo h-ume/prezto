@@ -69,6 +69,29 @@ elif (( $+commands[(i)lesspipe(|.sh)] )); then
   export LESSOPEN="| $commands[(i)lesspipe(|.sh)] %s 2>&-"
 fi
 
+if [[ -f ~/.ls_colors ]]; then
+  export LS_COLORS="$(cat ~/.ls_colors)"
+elif (( $+commands[dircolors] )); then
+  () {
+    local _ls_colors_candidate=(
+      ~/.dir_colors
+      ~/ghq/github.com/trapd00r/LS_COLORS/LS_COLORS
+    )
+    local _ls_colors
+    local _file
+    for _file in $_ls_colors_candidate; do
+      if [[ -f $_file ]]; then
+        _ls_colors=$_file
+        break
+      fi
+    done
+    if (( $+_ls_colors )); then
+      eval "$(dircolors -b $_ls_colors)"
+      export LSCOLORS='exfxcxdxbxGxDxabagacad'
+    fi
+  }
+fi
+
 if [[ $OSTYPE =~ 'freebsd' ]]; then
   export SSL_CA_CERT_PATH=/etc/ssl/certs
 fi
