@@ -65,7 +65,7 @@ export LESS='-F -i -M -R -S -X'
 # Try both `lesspipe` and `lesspipe.sh` as either might exist on a system.
 if (( $+commands[src-hilite-lesspipe.sh] )); then
   export LESSOPEN="| src-hilite-lesspipe.sh %s 2>&-"
-elif (( $+commands[(i)lesspipe(|.sh)] )); then
+elif [[ -n $commands[(i)lesspipe(|.sh)] ]]; then
   export LESSOPEN="| $commands[(i)lesspipe(|.sh)] %s 2>&-"
 fi
 
