@@ -63,12 +63,14 @@ export LESS='-F -i -M -R -S -X'
 
 # Set the Less input preprocessor.
 # Try both `lesspipe` and `lesspipe.sh` as either might exist on a system.
-if (( $+commands[src-hilite-lesspipe.sh] )); then
-  export LESSOPEN="| src-hilite-lesspipe.sh %s 2>&-"
+if [[ -x /usr/local/bin/lesspipe.sh ]]; then
+  export LESSOPEN="|/usr/local/bin/lesspipe.sh %s"
+elif (( $+commands[src-hilite-lesspipe.sh] )); then
+  export LESSOPEN="|src-hilite-lesspipe.sh %s 2>&-"
 elif [[ -x /usr/share/source-highlight/src-hilite-lesspipe.sh ]]; then
-  export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s 2>&-"
+  export LESSOPEN="|/usr/share/source-highlight/src-hilite-lesspipe.sh %s 2>&-"
 elif [[ -n $commands[(i)lesspipe(|.sh)] ]]; then
-  export LESSOPEN="| $commands[(i)lesspipe(|.sh)] %s 2>&-"
+  export LESSOPEN="|$commands[(i)lesspipe(|.sh)] %s 2>&-"
 fi
 
 if [[ -f ~/.ls_colors ]]; then
