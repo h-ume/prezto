@@ -50,13 +50,10 @@ elif [ -x '/c/Windows/System32/clip.exe' ]; then
   alias pbpaste='/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe get-clipboard'
 fi
 
-if (( $+commands[exa] )); then
-  alias exa='exa --color=always --icons -g'
-fi
+(( $+commands[exa] )) && alias exa='exa --color=always --icons -g'
 
-if (( ! $+commands[bat] && $+commands[batcat] )); then
-  alias bat='batcat'
-fi
+(( ! $+commands[vi] && $+commands[vim] )) && alias vi='vim'
+(( ! $+commands[bat] && $+commands[batcat] )) && alias bat='batcat'
 
 if [[ $HOST =~ '.mahoroba.org$' ]]; then
   alias traceroute='env RA_SERVER=whois.mahoroba.org traceroute'
