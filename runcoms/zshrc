@@ -53,7 +53,9 @@ fi
 (( $+commands[exa] )) && alias exa='exa --color=always --icons -g'
 
 (( ! $+commands[vi] && $+commands[vim] )) && alias vi='vim'
+
 (( ! $+commands[bat] && $+commands[batcat] )) && alias bat='batcat'
+which bat >/dev/null 2>&1 && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 if [[ $HOST =~ '.mahoroba.org$' ]]; then
   alias traceroute='env RA_SERVER=whois.mahoroba.org traceroute'
