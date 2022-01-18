@@ -54,8 +54,12 @@ fi
 
 (( ! $+commands[vi] && $+commands[vim] )) && alias vi='vim'
 
-(( ! $+commands[bat] && $+commands[batcat] )) && alias bat='batcat'
-which bat >/dev/null 2>&1 && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+if (( $+commands[bat] )); then
+  export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+elif (( $+commands[batcat] )); then
+  export MANPAGER="sh -c 'col -bx | batcat -l man -p'"
+  alias bat='batcat'
+fi
 
 if [[ $HOST =~ '.mahoroba.org$' ]]; then
   alias traceroute='env RA_SERVER=whois.mahoroba.org traceroute'
