@@ -64,7 +64,8 @@ export LESS='-F -i -M -R -S -X'
 # Set the Less input preprocessor.
 # Try both `lesspipe` and `lesspipe.sh` as either might exist on a system.
 if [[ -x /usr/local/bin/lesspipe.sh ]]; then
-  eval "$(/usr/local/bin/lesspipe.sh 2>&-)"
+  # eval "$(/usr/local/bin/lesspipe.sh 2>&-)"
+  export LESSOPEN="|LC_TIME=C /usr/local/bin/lesspipe.sh %s"
 elif (( $+commands[src-hilite-lesspipe.sh] )); then
   export LESSOPEN="|src-hilite-lesspipe.sh %s 2>&-"
 elif [[ -x /usr/share/source-highlight/src-hilite-lesspipe.sh ]]; then
