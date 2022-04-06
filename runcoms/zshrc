@@ -124,35 +124,39 @@ bindkey '^[[6~' end-of-line
 (( $+commands[fasd] )) || path=($path ~/.zprezto/modules/fasd/external)
 eval "$(fasd --init auto)"
 
-() {
-  local _fzf_dir_candidate=(
-    /usr/local/share/examples/fzf/shell
-    /usr/share/doc/fzf/examples
-  )
-  local _fzf_dir
-  local _dir
-  for _dir in $_fzf_dir_candidate; do
-    if [[ -d $_dir ]]; then
-      _fzf_dir=$_dir
-      break
+if [[ -f ~/.fzf.zsh ]]; then
+  source ~/.fzf.zsh
+else
+  () {
+    local _fzf_dir_candidate=(
+      /usr/local/share/examples/fzf/shell
+      /usr/share/doc/fzf/examples
+    )
+    local _fzf_dir
+    local _dir
+    for _dir in $_fzf_dir_candidate; do
+      if [[ -d $_dir ]]; then
+	_fzf_dir=$_dir
+	break
+      fi
+    done
+
+    if [[ -n "$_fzf_dir" ]]; then
+      # Auto-completion
+      # ---------------
+      [[ $- == *i* ]] && source "$_fzf_dir/completion.zsh" 2> /dev/null
+
+      # Key bindings
+      # ------------
+      source "$_fzf_dir/key-bindings.zsh"
+
+      # fzf+fasd
+      # ------------
+      local _fzf_fasd_dir=~/ghq/github.com/wookayin/fzf-fasd
+      [[ -d $_fzf_fasd_dir ]] && source "$_fzf_fasd_dir/fzf-fasd.plugin.zsh"
     fi
-  done
-
-  if (( $+_fzf_dir )); then
-    # Auto-completion
-    # ---------------
-    [[ $- == *i* ]] && source "$_fzf_dir/completion.zsh" 2> /dev/null
-
-    # Key bindings
-    # ------------
-    source "$_fzf_dir/key-bindings.zsh"
-
-    # fzf+fasd
-    # ------------
-    local _fzf_fasd_dir=~/ghq/github.com/wookayin/fzf-fasd
-    [[ -d $_fzf_fasd_dir ]] && source "$_fzf_fasd_dir/fzf-fasd.plugin.zsh"
-  fi
-}
+  }
+fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 if [[ ! $TTY =~ '^/dev/tty' ]]; then
