@@ -9,7 +9,7 @@
 # Browser
 #
 
-if [[ "$OSTYPE" == darwin* ]]; then
+if [[ -z "$BROWSER" && "$OSTYPE" == darwin* ]]; then
   export BROWSER='open'
 fi
 
@@ -23,6 +23,16 @@ if [[ $TERM = emacs ]]; then
     export PAGER='colcrt'
 else
     export PAGER='less'
+fi
+
+if [[ -z "$EDITOR" ]]; then
+  export EDITOR='nano'
+fi
+if [[ -z "$VISUAL" ]]; then
+  export VISUAL='nano'
+fi
+if [[ -z "$PAGER" ]]; then
+  export PAGER='less'
 fi
 
 #
@@ -58,7 +68,6 @@ path=(
 # Set the default Less options.
 # Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
 # Remove -X to enable it.
-# export LESS='-g -i -M -R -S -w -X -z-4'
 export LESS='-F -i -M -R -S -X'
 
 # Set the Less input preprocessor.
@@ -72,6 +81,16 @@ elif [[ -x /usr/share/source-highlight/src-hilite-lesspipe.sh ]]; then
   export LESSOPEN="|/usr/share/source-highlight/src-hilite-lesspipe.sh %s 2>&-"
 elif [[ -n $commands[(i)lesspipe(|.sh)] ]]; then
   export LESSOPEN="|$commands[(i)lesspipe(|.sh)] %s 2>&-"
+fi
+
+if [[ -z "$LESS" ]]; then
+  export LESS='-g -i -M -R -S -w -X -z-4'
+fi
+
+# Set the Less input preprocessor.
+# Try both `lesspipe` and `lesspipe.sh` as either might exist on a system.
+if [[ -z "$LESSOPEN" ]] && (( $#commands[(i)lesspipe(|.sh)] )); then
+  export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
 fi
 
 if [[ -f ~/.ls_colors ]]; then
