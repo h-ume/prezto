@@ -50,7 +50,12 @@ elif [ -x '/c/Windows/System32/clip.exe' ]; then
   alias pbpaste='/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe get-clipboard'
 fi
 
-(( $+commands[exa] )) && alias exa='exa --color=always --icons -g'
+if (( $+commands[exa] )); then
+  alias exa='exa --color=always --icons -g'
+  alias ll='exa -l'
+  alias la='ll -a'
+  alias lx='exa -a'
+fi
 
 (( ! $+commands[vi] && $+commands[vim] )) && alias vi='vim'
 
