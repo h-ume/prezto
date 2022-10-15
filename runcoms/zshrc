@@ -55,6 +55,7 @@ if (( $+commands[exa] )); then
   alias ll='exa -l'
   alias la='ll -a'
   alias lx='exa -a'
+  alias lt='ll --time=modified --sort=newest'
 fi
 
 (( ! $+commands[vi] && $+commands[vim] )) && alias vi='vim'
