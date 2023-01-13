@@ -29,6 +29,8 @@ fi
 unsetopt AUTO_CD
 unsetopt AUTO_PUSHD
 
+setopt BSDECHO
+
 unset "aliases[rsync]"
 if [[ ! ${(@M)${(f)"$(ls --version 2>&1)"}:#*GNU *} ]]; then
   alias lx='ls -aF'
