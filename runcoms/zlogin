@@ -19,6 +19,10 @@
 
 # Execute code only if STDERR is bound to a TTY.
 if [[ -o INTERACTIVE && -t 2 ]]; then
+  # Query terminal size; useful for serial lines.
+  if [ -x /usr/bin/resizewin ]; then
+    /usr/bin/resizewin -z
+  fi
 
   # Print a random, hopefully interesting, adage.
   if (( $+commands[fortune] )); then

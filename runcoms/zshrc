@@ -169,6 +169,8 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 if [[ ! $TTY =~ '^/dev/tty' ]]; then
   [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+else
+  PROMPT='%n@%m:%2~%# '
 fi
 
 # Local Variables:
