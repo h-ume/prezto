@@ -8,7 +8,7 @@
 # Execute code only if STDERR is bound to a TTY.
 [[ -o INTERACTIVE && -t 2 ]] && {
 
-[[ -n "${SSH_AGENT_PID}" ]] && kill ${SSH_AGENT_PID}
+[[ -n "${SSH_AGENT_PID}" ]] && kill -9 ${SSH_AGENT_PID}
 
 SAYINGS=(
     "So long and thanks for all the fish.\n  -- Douglas Adams"
