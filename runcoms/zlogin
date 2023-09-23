@@ -38,7 +38,9 @@ if [[ -o INTERACTIVE && -t 2 ]]; then
 
 fi >&2
 
-if (( $+commands[wsl-ssh-agent.sh] )); then
+if [[ "${$(tty):0:8}" = '/dev/tty' ]]; then
+   eval $(ssh-agent)
+elif (( $+commands[wsl-ssh-agent.sh] )); then
   eval $(wsl-ssh-agent.sh)
 elif [[ -r ~/bin/ssh-auth-sock-update.sh ]]; then
   source ~/bin/ssh-auth-sock-update.sh
