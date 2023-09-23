@@ -38,7 +38,7 @@ if [[ -o INTERACTIVE && -t 2 ]]; then
 
 fi >&2
 
-if [[ "${$(tty):0:8}" = '/dev/tty' && -z "${SSH_AGENT_PID}" ]]; then
+if [[ ${TTY} =~ '^/dev/tty' && -z ${SSH_AGENT_PID} ]]; then
   eval $(ssh-agent)
 elif (( $+commands[wsl-ssh-agent.sh] )); then
   eval $(wsl-ssh-agent.sh)
