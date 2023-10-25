@@ -134,6 +134,19 @@ if (( $+commands[npm] )); then
   export NODE_PATH=$(npm root -g)
 fi
 
+if (( ! $+DISPLAY )) && (
+     ifconfig hn0 2>/dev/null | grep -qE 'inet 172[.](1[6-9]|2[0-9]|3[01])[.]'
+   ); then
+  export DISPLAY=$(awk '/nameserver/ {print $2}' /etc/resolv.conf):0
+fi
+if (( $+DISPLAY )) && (( $+commands[fcitx] )); then
+  export GTK_IM_MODULE=fcitx
+  export QT_IM_MODULE=fcitx
+  export XMODIFIERS=@im=fcitx
+  # mozc start
+  fcitx -r -d 2>/dev/null
+fi
+
 # Local Variables:
 # mode: sh
 # sh-shell: zsh
