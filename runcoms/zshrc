@@ -52,7 +52,13 @@ elif [ -x '/c/Windows/System32/clip.exe' ]; then
   alias pbpaste='/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe get-clipboard'
 fi
 
-if (( $+commands[exa] )); then
+if (( $+commands[eza] )); then
+  alias eza='eza --color=always --icons -g'
+  alias ll='eza -l'
+  alias la='ll -a'
+  alias lx='eza -a'
+  alias lt='ll --sort=modified'
+elif (( $+commands[exa] )); then
   alias exa='exa --color=always --icons -g'
   alias ll='exa -l'
   alias la='ll -a'
