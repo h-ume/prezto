@@ -61,6 +61,7 @@ path=(
   $path
   $HOME/.local/{,s}bin(N)
   /opt/{homebrew,local}/{,s}bin(N)
+  /snap/{,s}bin(N)
   /usr/local/{,s}bin(N)
 )
 
@@ -130,7 +131,7 @@ if (( $+commands[fzf] )); then
   export FZF_DEFAULT_OPTS='--multi --bind ctrl-a:select-all --bind ctrl-u:deselect-all'
 fi
 
-if (( $+commands[npm] )); then
+if (( $+commands[npm] )) && (( $+commands[node] )); then
   export NODE_PATH=$(npm root -g)
 fi
 
