@@ -168,6 +168,8 @@ else
       # ------------
       local _fzf_fasd_dir=~/ghq/github.com/wookayin/fzf-fasd
       [[ -d $_fzf_fasd_dir ]] && source "$_fzf_fasd_dir/fzf-fasd.plugin.zsh"
+    elif (( $+commands[fzf] )); then
+      eval "$(fzf --zsh)"
     fi
   }
 fi
